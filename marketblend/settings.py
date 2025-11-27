@@ -7,7 +7,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # 🔹 SECURITY
 SECRET_KEY = 'django-insecure-)(7lejy-+c#ma0ames1xoj=@cl69m35#r=&i(e3cj&-qelb6h*'
 DEBUG = True
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '.onrender.com', 'marketblend.onrender.com']
+CSRF_TRUSTED_ORIGINS = [
+    'https://marketblend.onrender.com',
+    'http://marketblend.onrender.com'
+]
 
 # 🔹 Installed Apps
 INSTALLED_APPS = [
