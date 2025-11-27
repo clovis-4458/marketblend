@@ -13,6 +13,14 @@ CSRF_TRUSTED_ORIGINS = [
     'http://marketblend.onrender.com'
 ]
 
+# 🔹 Static Files Storage with WhiteNoise
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [BASE_DIR / 'static']  # if you have a static folder
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 # 🔹 Installed Apps
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -33,6 +41,7 @@ INSTALLED_APPS = [
 # 🔹 Middleware
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # ✅ WhiteNoise for static files
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -91,9 +100,7 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),  # ✅ create this folder if it doesn't exist
 ]
 
-# 🔹 Media files (uploads)
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 
 # 🔹 Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
