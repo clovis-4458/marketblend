@@ -1,0 +1,116 @@
+{% extends "products/base.html" %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}Contact - Market Blend{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Container & Headings */
+    .container.my-5 h2 {
+        color: #00A651;
+        margin-bottom: 30px;
+        font-weight: normal; /* Clean, professional look */
+        font-size: 32px;
+    }
+
+    /* Form Controls */
+    .form-control {
+        border: 1px solid #00A651;
+        border-radius: 5px;
+        padding: 12px;
+        font-size: 15px;
+        font-weight: normal;
+        width: 100%;
+    }
+
+    .form-control:focus {
+        border-color: #007A3D;
+        box-shadow: none;
+    }
+
+    /* Buttons */
+    .site-btn {
+        background-color: #00A651;
+        color: white;
+        padding: 12px 25px;
+        border-radius: 30px;
+        border: none;
+        transition: 0.3s;
+        font-weight: normal;
+        cursor: pointer;
+    }
+
+    .site-btn:hover {
+        background-color: #007A3D;
+        color: white;
+        text-decoration: none;
+    }
+
+    .btn-success {
+        background-color: #00A651 !important;
+        border-color: #00A651 !important;
+        font-weight: normal !important;
+        padding: 10px 20px;
+        border-radius: 8px;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        text-decoration: none;
+    }
+
+    .btn-success:hover {
+        background-color: #007A3D !important;
+        border-color: #007A3D !important;
+        text-decoration: none;
+    }
+
+    /* Messages */
+    .alert {
+        border-radius: 5px;
+        font-weight: normal;
+        font-size: 14px;
+    }
+
+    /* WhatsApp Link */
+    .mt-4 {
+        margin-top: 20px;
+    }
+
+    .mt-4 a {
+        text-decoration: none;
+        font-weight: normal;
+    }
+
+    .mt-4 a:hover {
+        text-decoration: none;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <h2>Contact Us</h2>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-success">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+
+    <form method="post" class="mb-4">
+        {% csrf_token %}
+        <input class="form-control mb-3" type="text" name="name" placeholder="Your Name" required>
+        <input class="form-control mb-3" type="email" name="email" placeholder="Your Email" required>
+        <textarea class="form-control mb-3" name="message" rows="5" placeholder="Your Message" required></textarea>
+        <button class="site-btn" type="submit">Send Message</button>
+    </form>
+
+    <!-- WhatsApp Contact Link -->
+    <div class="mt-4">
+        <a href="https://wa.me/256755450568" target="_blank" class="btn btn-success">
+            <i class="fa fa-whatsapp"></i> Chat with us on WhatsApp
+        </a>
+    </div>
+</div>
+{% endblock %}

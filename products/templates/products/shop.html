@@ -1,0 +1,52 @@
+{% extends "products/base.html" %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}Shop - Market Blend{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <h2 class="section-title mb-4">Shop Products</h2>
+
+    <div class="row">
+        {% for product in products %}
+        <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+            <div class="featured__item">
+                <div class="featured__item__pic set-bg"
+                     data-setbg="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no-image.png' %}{% endif %}">
+                    <ul class="featured__item__pic__hover">
+                    
+                        <!-- 🛒 Add to Cart button (submits to cart:add_to_cart) -->
+                        <li>
+                            <form action="{% url 'cart:add_to_cart' product.id %}" method="post" class="d-inline">
+                                {% csrf_token %}
+                                <input type="hidden" name="quantity" value="1">
+                                <input type="hidden" name="next" value="{{ request.path }}">
+                                <button type="submit" style="border:none;background:none;">
+                                    <i class="fa fa-shopping-cart"></i>
+                                </button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="featured__item__text">
+                    <h6><a href="#">{{ product.name }}</a></h6>
+                    <h5>UGX {{ product.price|intcomma }}</h5>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p>No products available.</p>
+        {% endfor %}
+    </div>
+</div>
+
+
+<script>
+    $('.set-bg').each(function () {
+        var bg = $(this).data('setbg');
+        $(this).css('background-image', 'url(' + bg + ')');
+    });
+</script>
+{% endblock %}

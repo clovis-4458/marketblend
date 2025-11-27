@@ -1,0 +1,74 @@
+{% extends "products/base.html" %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}Checkout{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <h2 class="mb-4 text-success">💳 Checkout</h2>
+
+    <form method="POST">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-md-6">
+                <h4>Shipping Details</h4>
+                <div class="mb-3">
+                    <label class="form-label">Full Name</label>
+                    <input type="text" name="name" class="form-control" value="{{ initial_data.name }}" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Email</label>
+                    <input type="email" name="email" class="form-control" value="{{ initial_data.email }}" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Phone</label>
+                    <input type="text" name="phone" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Address</label>
+                    <textarea name="address" class="form-control" rows="3" required></textarea>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Payment Method</label>
+                    <select name="payment" class="form-control" required>
+                        <option value="">Select Payment</option>
+                        <option value="cash">Cash on Delivery</option>
+                        <option value="mobile_money">Mobile Money</option>
+                        <option value="card">Credit/Debit Card</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <h4>Order Summary</h4>
+                <table class="table table-bordered text-center">
+                    <thead class="table-success">
+                        <tr>
+                            <th>Product</th>
+                            <th>Qty</th>
+                            <th>Subtotal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in cart_items %}
+                        <tr>
+                            <td>{{ item.product.name }}</td>
+                            <td>{{ item.quantity }}</td>
+                            <td>UGX {{ item.subtotal|intcomma }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                    <tfoot class="table-light">
+                        <tr>
+                            <th colspan="2" class="text-end">Total:</th>
+                            <th>UGX {{ cart_total|intcomma }}</th>
+                        </tr>
+                    </tfoot>
+                </table>
+                <button type="submit" class="btn btn-success w-100 mt-3">Place Order</button>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}

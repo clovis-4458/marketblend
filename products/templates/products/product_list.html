@@ -1,0 +1,25 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Market Blend - Products</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <h1>Products</h1>
+    <ul>
+      {% for product in products %}
+        <li>
+          <img src="{{ product.image.url }}" alt="{{ product.name }}" width="150">
+          <h3>{{ product.name }}</h3>
+          <p><strong>${{ product.price }}</strong></p>
+          <p>{{ product.description|truncatewords:20 }}</p>
+        </li>
+      {% empty %}
+        <li>No products available.</li>
+      {% endfor %}
+    </ul>
+</body>
+</html>

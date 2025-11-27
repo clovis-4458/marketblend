@@ -1,0 +1,315 @@
+{% load static %}
+{% load humanize %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Market Blend Template">
+    <meta name="keywords" content="MarketBlend, ecommerce, organic, shop">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Market Blend{% endblock %}</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/elegant-icons.css' %}">
+    <link rel="stylesheet" href="{% static 'css/nice-select.css' %}">
+    <link rel="stylesheet" href="{% static 'css/jquery-ui.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/slicknav.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    {% block extra_css %}{% endblock %}
+
+    <style>
+        header, .header, .navbar, .site-header { background-color: #e3e7f5 !important; }
+        .header__top ul li,
+        .header__top__left ul li,
+        .header__top__right a,
+        .header__top__right__social a i,
+        .header__menu ul li a,
+        .header__menu__dropdown li a,
+        .header__cart__price,
+        .header__cart ul li a,
+        .navbar a,
+        .nav-item a { color: #00A651 !important; text-decoration: none !important; }
+        .header__menu ul li a:hover,
+        .header__menu__dropdown li a:hover,
+        .header__top__right a:hover,
+        .header__top__right__social a i:hover,
+        .header__cart ul li a:hover,
+        .navbar a:hover { color: #007A3D !important; text-decoration: underline !important; }
+        .header__menu ul li.active > a { color: #00994D !important; text-decoration: underline !important; }
+        .navbar-brand, .logo { color: #00A651 !important; font-weight: 900 !important; }
+        .header__top__right__auth a { color: #00A651 !important; margin-left: 10px; font-weight: bold !important; }
+        .header__top__right__auth a:hover { color: #007A3D !important; }
+        .search-bar .form-control, .search-bar .form-select, .search-bar .btn { height: 50px; font-size: 14px; }
+        .search-bar .form-control { border-radius: 30px 0 0 30px; border: 1px solid #00A651; }
+        .search-bar .form-select { border-top: 1px solid #00A651; border-bottom: 1px solid #00A651; border-left: 0; border-right: 0; border-radius: 0; }
+        .search-bar .btn { border-radius: 0 30px 30px 0; background-color: #00A651; border: none; }
+        .search-bar .btn:hover { background-color: #007A3D; }
+        .footer { background-color: #f4f6fa !important; border-top: 4px solid #00A651 !important; padding: 8px 0 !important; }
+        .footer__widget h6, .footer__widget ul li a, .footer__widget p, .footer__about ul li { color: #00A651 !important; }
+        .hero-slider .item { display: flex; justify-content: center; align-items: center; position: relative; border-radius: 10px; overflow: hidden; }
+        .hero-slider .item img { width: 100%; height: 300px; object-fit: cover; }
+        .slider-text { position: absolute; bottom: 15px; left: 10px; background: rgba(0,0,0,0.35); color: #fff; padding: 8px 15px; border-radius: 5px; }
+    </style>
+</head>
+
+<body>
+<div id="preloder"><div class="loader"></div></div>
+
+<header>
+    <div class="header__top">
+        <div class="container">
+            <div class="row align-items-center">
+
+                <div class="col-md-6 d-flex align-items-center">
+                    <div class="header__top__left">
+                        <ul class="d-flex align-items-center mb-0">
+                            <li class="me-3"><i class="fa fa-envelope"></i> marketblend@gmail.com</li>
+                            <li><i class="fa fa-envelope"></i> clovisprom60@gmail.com</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-md-6 d-flex justify-content-end align-items-center">
+                    <div class="header__top__right__auth d-flex align-items-center gap-3">
+                        {% if user.is_authenticated %}
+                            <a href="#" class="text-dark d-flex align-items-center">
+                                <i class="fa fa-user-circle me-1"></i> {{ user.username }}
+                            </a>
+                            <span class="text-secondary">|</span>
+                            <a href="{% url 'accounts:logout' %}" class="text-dark d-flex align-items-center">
+                                <i class="fa fa-sign-out me-1"></i> Logout
+                            </a>
+                        {% else %}
+                            <a href="{% url 'accounts:register' %}" class="text-dark d-flex align-items-center">
+                                <i class="fa fa-user-plus me-1"></i> Register
+                            </a>
+                            <span class="text-secondary">|</span>
+                            <a href="{% url 'accounts:index' %}" class="text-dark d-flex align-items-center">
+                                <i class="fa fa-sign-in me-1"></i> Login
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+
+            <div class="col-lg-2">
+                <div class="header__logo">
+                    <a href="{% url 'home' %}">
+                        <img src="{% static 'img/marketblendlogo.png' %}" alt="Market Blend" style="width:120px;">
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-lg-7">
+                <form method="GET" action="{% url 'shop' %}" class="search-bar mb-3" style="margin-top:20px;">
+                    <div class="input-group w-100">
+                        <input type="text" name="q" class="form-control"
+                            placeholder="Search for products, brands, categories..."
+                            value="{{ query }}">
+
+                        <select name="category" class="form-select">
+                            <option value="">All Categories</option>
+                            {% for cat in categories %}
+                            <option value="{{ cat.id }}" {% if selected_category == cat.id %}selected{% endif %}>
+                                {{ cat.name }}
+                            </option>
+                            {% endfor %}
+                        </select>
+
+                        <button type="submit" class="btn btn-success">Search</button>
+                    </div>
+                </form>
+
+                <nav class="header__menu">
+                    <ul>
+                        <li class="{% if request.resolver_match.url_name == 'home' %}active{% endif %}">
+                            <a href="{% url 'home' %}">Home</a>
+                        </li>
+
+                        <li class="{% if request.resolver_match.url_name == 'shop' %}active{% endif %}">
+                            <a href="{% url 'shop' %}">Products</a>
+                        </li>
+
+                        <li class="{% if request.resolver_match.url_name == 'cart:view_cart' %}active{% endif %}">
+
+                            <a href="{% url 'cart:view_cart' %}">Cart</a>
+                        </li>
+
+                        <li><a href="{% url 'blog:list' %}">Blog</a></li>
+                        <li><a href="{% url 'contact' %}">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+
+            <div class="col-lg-3 d-flex align-items-center justify-content-end">
+                <div class="header__cart">
+                    <ul>
+                        <li>
+                            <a href="{% url 'cart:view_cart' %}">
+                                <i class="fa fa-shopping-bag"></i> Cart
+                                <span>{{ cart_count }}</span>
+                            </a>
+                        </li>
+                    </ul>
+
+                    <div class="header__cart__price">
+                        Total: <span>UGX {{ cart_total|intcomma }}</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="humberger__open"><i class="fa fa-bars"></i></div>
+    </div>
+
+</header>
+
+<main>
+
+<!-- ================== Flash Messages ================== -->
+<div class="container mt-3">
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+</div>
+
+<section class="my-4">
+    <div class="container">
+        <div class="row">
+
+            <!-- LEFT SIDE: FEATURED PRODUCTS -->
+            <div class="col-lg-8">
+                <div class="row">
+
+                    {% for product in featured_products %}
+                    <div class="col-md-6 mb-4">
+                        <div class="card shadow-sm text-center p-2">
+                            <img src="{{ product.image.url }}" class="card-img-top" style="height:190px; object-fit:contain;" alt="{{ product.name }}">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ product.name|truncatechars:40 }}</h5>
+                                <p class="text-danger fw-bold mb-2">Ugx.{{ product.price|intcomma }}.00</p>
+                                <div class="d-flex justify-content-center gap-2">
+                                    <a href="{% url 'shop_details' product.id %}" class="btn btn-outline-primary btn-sm">Details</a>
+                                    <form action="{% url 'cart:add_to_cart' product.id %}" method="POST">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-success btn-sm">Add to Cart</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+
+                </div>
+            </div>
+
+            <!-- RIGHT SIDE SLIDER unchanged -->
+            <div class="col-lg-4">
+                <div class="hero-slider">
+                    <div class="owl-carousel owl-theme">
+                        {% for product in featured_products %}
+                        <div class="item">
+                            <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                            <div class="slider-text">
+                                <h4>{{ product.name }}</h4>
+                                <p>UGX {{ product.price|intcomma }}</p>
+                                <a href="{% url 'shop_details' product.id %}" class="btn btn-success btn-sm">Shop Now</a>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+{% block content %}{% endblock %}
+</main>
+
+<footer class="footer spad">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-lg-4">
+                <div class="footer__about">
+                    <img src="{% static 'img/marketblendlogo.png' %}" alt="Market Blend" style="width:120px;">
+                    <ul>
+                        <li>Address: Kampala, Uganda</li>
+                        <li>Phone: +256 755 450 568</li>
+                        <li>Email: marketblend@gmail.com</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="footer__widget">
+                    <h6>Useful Links</h6>
+                    <ul>
+                        <li><a href="{% url 'home' %}">Home</a></li>
+                        <li><a href="{% url 'shop' %}">Shop</a></li>
+                        <li><a href="{% url 'contact' %}">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="footer__widget">
+                    <h6>Join Our Newsletter</h6>
+                    <p>Get updates about new products and offers!</p>
+                    <form action="{% url 'subscribe_newsletter' %}" method="POST">
+                        {% csrf_token %}
+                        <input type="email" name="email" placeholder="Enter your email" required>
+                        <button type="submit" class="site-btn">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</footer>
+
+<script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/jquery.nice-select.min.js' %}"></script>
+<script src="{% static 'js/jquery-ui.min.js' %}"></script>
+<script src="{% static 'js/jquery.slicknav.js' %}"></script>
+<script src="{% static 'js/mixitup.min.js' %}"></script>
+<script src="{% static 'js/owl.carousel.min.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
+
+<script>
+$(document).ready(function(){
+    $(".hero-slider .owl-carousel").owlCarousel({
+        items: 1,
+        loop: true,
+        autoplay: true,
+        autoplayTimeout: 4000,
+        dots: true,
+        nav: true,
+        navText: ["<i class='fa fa-chevron-left'></i>","<i class='fa fa-chevron-right'></i>"],
+        smartSpeed: 800,
+        animateOut: 'fadeOut',
+        animateIn: 'fadeIn'
+    });
+});
+</script>
+
+</body>
+</html>
