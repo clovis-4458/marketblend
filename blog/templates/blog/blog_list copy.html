@@ -1,0 +1,28 @@
+{% extends "products/base.html" %}
+
+{% block title %}Blog{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <h2 class="mb-4">Our Blog</h2>
+    <div class="row">
+        {% for post in blog_posts %}
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                {% if post.image %}
+                <img src="{{ post.image.url }}" class="card-img-top" alt="{{ post.title }}">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ post.title }}</h5>
+                    <p class="text-muted">By {{ post.author }} | {{ post.published_date|date:"F j, Y" }}</p>
+                    <p>{{ post.excerpt }}</p>
+                    <a href="{% url 'blog:detail' post.id %}" class="btn btn-success">Read More</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p>No blog posts available yet.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
