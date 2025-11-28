@@ -56,6 +56,38 @@
 </head>
 
 <body>
+
+<!-- ===================== MOBILE MENU ===================== -->
+<div class="humberger__menu__overlay"></div>
+
+<div class="humberger__menu__wrapper">
+    <div class="humberger__menu__logo">
+        <a href="{% url 'home' %}">
+            <img src="{% static 'img/marketblendlogo.png' %}" alt="Market Blend" style="width:120px;">
+        </a>
+    </div>
+
+    <nav class="humberger__menu__nav mobile-menu">
+        <ul>
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'shop' %}">Products</a></li>
+            <li><a href="{% url 'cart:view_cart' %}">Cart</a></li>
+            <li><a href="{% url 'blog:list' %}">Blog</a></li>
+            <li><a href="{% url 'contact' %}">Contact</a></li>
+        </ul>
+    </nav>
+
+    <div id="mobile-menu-wrap"></div>
+
+    <div class="humberger__menu__contact">
+        <ul>
+            <li><i class="fa fa-envelope"></i> marketblend@gmail.com</li>
+            <li><i class="fa fa-phone"></i> +256 755 450 568</li>
+        </ul>
+    </div>
+</div>
+
+<!-- ===================== HEADER ===================== -->
 <div id="preloder"><div class="loader"></div></div>
 
 <header>
@@ -129,21 +161,17 @@
                     </div>
                 </form>
 
-                <nav class="header__menu">
+                <nav class="header__menu d-none d-lg-block">
                     <ul>
                         <li class="{% if request.resolver_match.url_name == 'home' %}active{% endif %}">
                             <a href="{% url 'home' %}">Home</a>
                         </li>
-
                         <li class="{% if request.resolver_match.url_name == 'shop' %}active{% endif %}">
                             <a href="{% url 'shop' %}">Products</a>
                         </li>
-
                         <li class="{% if request.resolver_match.url_name == 'cart:view_cart' %}active{% endif %}">
-
                             <a href="{% url 'cart:view_cart' %}">Cart</a>
                         </li>
-
                         <li><a href="{% url 'blog:list' %}">Blog</a></li>
                         <li><a href="{% url 'contact' %}">Contact</a></li>
                     </ul>
@@ -169,14 +197,14 @@
 
         </div>
 
-        <div class="humberger__open"><i class="fa fa-bars"></i></div>
+        <div class="humberger__open d-lg-none"><i class="fa fa-bars"></i></div>
     </div>
 
 </header>
 
+<!-- ===================== MAIN ===================== -->
 <main>
 
-<!-- ================== Flash Messages ================== -->
 <div class="container mt-3">
     {% if messages %}
         {% for message in messages %}
@@ -192,7 +220,6 @@
     <div class="container">
         <div class="row">
 
-            <!-- LEFT SIDE: FEATURED PRODUCTS -->
             <div class="col-lg-8">
                 <div class="row">
 
@@ -218,7 +245,6 @@
                 </div>
             </div>
 
-            <!-- RIGHT SIDE SLIDER unchanged -->
             <div class="col-lg-4">
                 <div class="hero-slider">
                     <div class="owl-carousel owl-theme">
@@ -243,6 +269,7 @@
 {% block content %}{% endblock %}
 </main>
 
+<!-- ===================== FOOTER ===================== -->
 <footer class="footer spad">
     <div class="container">
         <div class="row">
@@ -285,6 +312,7 @@
     </div>
 </footer>
 
+<!-- ===================== SCRIPTS ===================== -->
 <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
 <script src="{% static 'js/bootstrap.min.js' %}"></script>
 <script src="{% static 'js/jquery.nice-select.min.js' %}"></script>
@@ -295,7 +323,28 @@
 <script src="{% static 'js/main.js' %}"></script>
 
 <script>
-$(document).ready(function(){
+$(document).ready(function () {
+
+    /* MOBILE MENU TOGGLE */
+    $('.humberger__open').on('click', function () {
+        $('.humberger__menu__wrapper').addClass('show__humberger__menu__wrapper');
+        $('.humberger__menu__overlay').addClass('active');
+        $('body').addClass('overflow-hidden');
+    });
+
+    $('.humberger__menu__overlay').on('click', function () {
+        $('.humberger__menu__wrapper').removeClass('show__humberger__menu__wrapper');
+        $('.humberger__menu__overlay').removeClass('active');
+        $('body').removeClass('overflow-hidden');
+    });
+
+    /* Slicknav initialization */
+    $(".mobile-menu").slicknav({
+        prependTo: '#mobile-menu-wrap',
+        allowParentLinks: true
+    });
+
+    /* Slider */
     $(".hero-slider .owl-carousel").owlCarousel({
         items: 1,
         loop: true,
