@@ -127,6 +127,32 @@
         font-size: 11px;
         padding: 3px 6px;
     }
+
+    /* ------------------- MOBILE HEADER ------------------- */
+    .header__logo img {
+        max-height: 35px; /* shrink logo */
+    }
+
+    .header__search {
+        flex: 1;
+        margin-left: 10px;
+    }
+
+    .header__top,
+    .header__search-container {
+        display: flex;
+        align-items: center;
+    }
+
+    .header__search input[type="text"] {
+        height: 35px;
+        font-size: 13px;
+    }
+
+    .header__search button {
+        height: 35px;
+        padding: 0 10px;
+    }
 }
 </style>
 {% endblock %}
