@@ -81,8 +81,14 @@
         @media (max-width: 767px) {
             .header__top { display: block !important; padding: 5px 0; }
             .header__top .col-md-6 { flex: 0 0 100%; max-width: 100%; margin-bottom: 5px; }
-            .header__top__left ul, .header__top__right__auth { justify-content: center; flex-wrap: wrap; }
-            .header__top__left ul li, .header__top__right__auth a { font-size: 12px; margin: 0 5px; }
+
+            /* Stack emails vertically */
+            .header__top__left ul { flex-direction: column; align-items: center; padding-left: 0; margin-bottom: 5px; }
+            .header__top__left ul li { margin: 2px 0; font-size: 12px; text-align: center; }
+
+            /* Auth links centered under emails */
+            .header__top__right__auth { justify-content: center; flex-wrap: wrap; margin-top: 5px; }
+            .header__top__right__auth a { font-size: 12px; margin: 2px 5px; text-align: center; }
         }
     </style>
 </head>
@@ -109,6 +115,7 @@
             <li class="separator"></li>
             <li><strong>Contact:</strong></li>
             <li><i class="fa fa-envelope"></i> marketblend@gmail.com</li>
+            <li><i class="fa fa-envelope"></i> clovisprom60@gmail.com</li>
             <li><i class="fa fa-phone"></i> +256 755 450 568</li>
 
             <li class="separator"></li>
@@ -132,7 +139,6 @@
     <div class="header__top">
         <div class="container">
             <div class="row align-items-center">
-
                 <div class="col-md-6 d-flex align-items-center">
                     <div class="header__top__left">
                         <ul class="d-flex align-items-center mb-0">
@@ -163,14 +169,12 @@
                         {% endif %}
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
 
     <div class="container">
         <div class="row">
-
             <div class="col-lg-2">
                 <div class="header__logo">
                     <a href="{% url 'home' %}">
@@ -226,7 +230,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
 
         <div class="humberger__open d-lg-none"><i class="fa fa-bars"></i></div>
@@ -327,7 +330,6 @@
 
 <script>
 $(document).ready(function () {
-
     /* MOBILE MENU TOGGLE */
     $('.humberger__open').on('click', function () {
         $('.humberger__menu__wrapper').addClass('show__humberger__menu__wrapper');
