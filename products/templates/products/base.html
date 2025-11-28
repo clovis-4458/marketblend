@@ -99,7 +99,7 @@
             <li><a href="{% url 'cart:view_cart' %}">Cart</a></li>
             <li><a href="{% url 'blog:list' %}">Blog</a></li>
             <li><a href="{% url 'contact' %}">Contact</a></li>
-            
+
             <li class="separator"></li> <!-- separator for contact -->
             <li><strong>Contact:</strong></li>
             <li><i class="fa fa-envelope"></i> marketblend@gmail.com</li>
@@ -240,6 +240,26 @@
         {% endfor %}
     {% endif %}
 </div>
+
+<!-- ===================== HERO SLIDER ===================== -->
+<section class="my-4">
+    <div class="container">
+        <div class="hero-slider">
+            <div class="owl-carousel owl-theme">
+                {% for product in featured_products %}
+                <div class="item">
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                    <div class="slider-text">
+                        <h4>{{ product.name }}</h4>
+                        <p>UGX {{ product.price|intcomma }}</p>
+                        <a href="{% url 'shop_details' product.id %}" class="btn btn-success btn-sm">Shop Now</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
 
 {% block content %}{% endblock %}
 </main>
