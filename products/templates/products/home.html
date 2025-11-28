@@ -72,9 +72,11 @@
     font-size: 24px;
 }
 
-/* Responsive adjustments */
+/* ------------------------------ */
+/* RESPONSIVE — 2 columns on phone */
+/* ------------------------------ */
 @media (max-width: 576px) {
-    .col-6 { flex: 0 0 33.3333%; max-width: 33.3333%; } /* 3 columns on mobile */
+    .col-6 { flex: 0 0 50%; max-width: 50%; }  /* << CHANGED FROM 33% to 50% */
     .product-img { height: 120px; }
     .product-name { font-size: 14px; min-height: 38px; }
     .product-price { font-size: 14px; }
@@ -82,27 +84,27 @@
 }
 
 /* ------------------------------------------------------------ */
-/* FIXED: Reduce empty space between image and "Add to Cart"    */
+/* FIXED: Reduce empty space between image and Add to Cart      */
 /* ------------------------------------------------------------ */
 .product-name {
-    margin-top: 4px !important;    /* reduce top gap */
-    min-height: 28px !important;   /* reduce name height */
+    margin-top: 4px !important;
+    min-height: 28px !important;
 }
 
 .product-img {
-    height: 130px !important;      /* reduce tall image area */
+    height: 130px !important;
 }
 
 .product-card {
-    padding: 10px !important;      /* make card tighter */
+    padding: 10px !important;
 }
 
 .items-left {
-    margin-top: -5px !important;   /* reduce spacing */
+    margin-top: -5px !important;
 }
 
 .btn {
-    margin-top: 4px !important;    /* bring button closer */
+    margin-top: 4px !important;
 }
 </style>
 {% endblock %}
