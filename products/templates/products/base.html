@@ -21,6 +21,7 @@
     {% block extra_css %}{% endblock %}
 
     <style>
+        /* ================= HEADER / NAV STYLES ================= */
         header, .header, .navbar, .site-header { background-color: #e3e7f5 !important; }
         .header__top ul li,
         .header__top__left ul li,
@@ -47,11 +48,28 @@
         .search-bar .form-select { border-top: 1px solid #00A651; border-bottom: 1px solid #00A651; border-left: 0; border-right: 0; border-radius: 0; }
         .search-bar .btn { border-radius: 0 30px 30px 0; background-color: #00A651; border: none; }
         .search-bar .btn:hover { background-color: #007A3D; }
+
+        /* ================= FOOTER ================= */
         .footer { background-color: #f4f6fa !important; border-top: 4px solid #00A651 !important; padding: 8px 0 !important; }
         .footer__widget h6, .footer__widget ul li a, .footer__widget p, .footer__about ul li { color: #00A651 !important; }
+
+        /* ================= HERO SLIDER ================= */
         .hero-slider .item { display: flex; justify-content: center; align-items: center; position: relative; border-radius: 10px; overflow: hidden; }
         .hero-slider .item img { width: 100%; height: 300px; object-fit: cover; }
         .slider-text { position: absolute; bottom: 15px; left: 10px; background: rgba(0,0,0,0.35); color: #fff; padding: 8px 15px; border-radius: 5px; }
+
+        /* ================= PRODUCT CARDS ================= */
+        .card { transition: all 0.3s ease; }
+        .card:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
+        .card-title { font-size: 16px; font-weight: 600; }
+        .card p.text-danger { font-size: 14px; font-weight: bold; }
+
+        /* ================= RESPONSIVE ================= */
+        @media (max-width: 576px) {
+            .card-title { font-size: 14px; }
+            .card p.text-danger { font-size: 13px; }
+            .card .btn { font-size: 12px; padding: 4px 8px; }
+        }
     </style>
 </head>
 
@@ -59,7 +77,6 @@
 
 <!-- ===================== MOBILE MENU ===================== -->
 <div class="humberger__menu__overlay"></div>
-
 <div class="humberger__menu__wrapper">
     <div class="humberger__menu__logo">
         <a href="{% url 'home' %}">
@@ -163,15 +180,9 @@
 
                 <nav class="header__menu d-none d-lg-block">
                     <ul>
-                        <li class="{% if request.resolver_match.url_name == 'home' %}active{% endif %}">
-                            <a href="{% url 'home' %}">Home</a>
-                        </li>
-                        <li class="{% if request.resolver_match.url_name == 'shop' %}active{% endif %}">
-                            <a href="{% url 'shop' %}">Products</a>
-                        </li>
-                        <li class="{% if request.resolver_match.url_name == 'cart:view_cart' %}active{% endif %}">
-                            <a href="{% url 'cart:view_cart' %}">Cart</a>
-                        </li>
+                        <li class="{% if request.resolver_match.url_name == 'home' %}active{% endif %}"><a href="{% url 'home' %}">Home</a></li>
+                        <li class="{% if request.resolver_match.url_name == 'shop' %}active{% endif %}"><a href="{% url 'shop' %}">Products</a></li>
+                        <li class="{% if request.resolver_match.url_name == 'cart:view_cart' %}active{% endif %}"><a href="{% url 'cart:view_cart' %}">Cart</a></li>
                         <li><a href="{% url 'blog:list' %}">Blog</a></li>
                         <li><a href="{% url 'contact' %}">Contact</a></li>
                     </ul>
@@ -199,7 +210,6 @@
 
         <div class="humberger__open d-lg-none"><i class="fa fa-bars"></i></div>
     </div>
-
 </header>
 
 <!-- ===================== MAIN ===================== -->
@@ -220,17 +230,17 @@
     <div class="container">
         <div class="row">
 
+            <!-- ================= FEATURED PRODUCTS ================= -->
             <div class="col-lg-8">
                 <div class="row">
-
                     {% for product in featured_products %}
-                    <div class="col-md-6 mb-4">
-                        <div class="card shadow-sm text-center p-2">
-                            <img src="{{ product.image.url }}" class="card-img-top" style="height:190px; object-fit:contain;" alt="{{ product.name }}">
-                            <div class="card-body">
+                    <div class="col-6 col-sm-4 col-md-6 mb-3">
+                        <div class="card shadow-sm text-center p-2" style="min-height:280px;">
+                            <img src="{{ product.image.url }}" class="card-img-top" style="height:150px; object-fit:contain;" alt="{{ product.name }}">
+                            <div class="card-body p-2">
                                 <h5 class="card-title">{{ product.name|truncatechars:40 }}</h5>
-                                <p class="text-danger fw-bold mb-2">Ugx.{{ product.price|intcomma }}.00</p>
-                                <div class="d-flex justify-content-center gap-2">
+                                <p class="text-danger fw-bold mb-2">UGX {{ product.price|intcomma }}.00</p>
+                                <div class="d-flex justify-content-center gap-1 flex-wrap">
                                     <a href="{% url 'shop_details' product.id %}" class="btn btn-outline-primary btn-sm">Details</a>
                                     <form action="{% url 'cart:add_to_cart' product.id %}" method="POST">
                                         {% csrf_token %}
@@ -241,10 +251,10 @@
                         </div>
                     </div>
                     {% endfor %}
-
                 </div>
             </div>
 
+            <!-- ================= HERO SLIDER ================= -->
             <div class="col-lg-4">
                 <div class="hero-slider">
                     <div class="owl-carousel owl-theme">
