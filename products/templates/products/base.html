@@ -74,6 +74,16 @@
             .card { margin-bottom: 10px; }
         }
 
+        /* -------------------- LOGO ADJUSTMENT -------------------- */
+        .header__logo img, .humberger__menu__logo img { max-width: 100px; height: auto; }
+
+        /* -------------------- SHOW TOP HEADER ON MOBILE -------------------- */
+        @media (max-width: 767px) {
+            .header__top { display: block !important; padding: 5px 0; }
+            .header__top .col-md-6 { flex: 0 0 100%; max-width: 100%; margin-bottom: 5px; }
+            .header__top__left ul, .header__top__right__auth { justify-content: center; flex-wrap: wrap; }
+            .header__top__left ul li, .header__top__right__auth a { font-size: 12px; margin: 0 5px; }
+        }
     </style>
 </head>
 
