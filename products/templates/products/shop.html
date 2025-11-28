@@ -10,29 +10,32 @@
 
     <div class="row">
         {% for product in products %}
-        <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-            <div class="featured__item">
-                <div class="featured__item__pic set-bg"
-                     data-setbg="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no-image.png' %}{% endif %}">
-                    <ul class="featured__item__pic__hover">
-                    
-                        <!-- 🛒 Add to Cart button (submits to cart:add_to_cart) -->
-                        <li>
-                            <form action="{% url 'cart:add_to_cart' product.id %}" method="post" class="d-inline">
-                                {% csrf_token %}
-                                <input type="hidden" name="quantity" value="1">
-                                <input type="hidden" name="next" value="{{ request.path }}">
-                                <button type="submit" style="border:none;background:none;">
-                                    <i class="fa fa-shopping-cart"></i>
-                                </button>
-                            </form>
-                        </li>
-                    </ul>
-                </div>
+        <div class="col-6 col-sm-4 col-md-3 mb-4">
+            <div class="card shadow-sm text-center p-2 h-100" style="min-height: 300px;">
+                
+                <!-- Product Image -->
+                <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no-image.png' %}{% endif %}" 
+                     class="card-img-top" 
+                     style="height: 180px; object-fit: contain;" 
+                     alt="{{ product.name }}">
 
-                <div class="featured__item__text">
-                    <h6><a href="#">{{ product.name }}</a></h6>
-                    <h5>UGX {{ product.price|intcomma }}</h5>
+                <!-- Product Info -->
+                <div class="card-body p-2 d-flex flex-column justify-content-between">
+                    <div>
+                        <h5 class="card-title">{{ product.name|truncatechars:40 }}</h5>
+                        <p class="text-danger fw-bold mb-2">UGX {{ product.price|intcomma }}.00</p>
+                    </div>
+
+                    <!-- Buttons -->
+                    <div class="d-flex justify-content-center gap-1 flex-wrap mt-2">
+                        <a href="{% url 'shop_details' product.id %}" class="btn btn-outline-primary btn-sm">Details</a>
+
+                        <form action="{% url 'cart:add_to_cart' product.id %}" method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="quantity" value="1">
+                            <button type="submit" class="btn btn-success btn-sm">Add to Cart</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -41,12 +44,4 @@
         {% endfor %}
     </div>
 </div>
-
-
-<script>
-    $('.set-bg').each(function () {
-        var bg = $(this).data('setbg');
-        $(this).css('background-image', 'url(' + bg + ')');
-    });
-</script>
 {% endblock %}
