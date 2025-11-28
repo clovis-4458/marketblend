@@ -6,48 +6,139 @@
 
 {% block extra_css %}
 <style>
-    /* Style the top-right auth links */
+    /* Auth links */
     .header__top__right__auth a {
-        color: #00A651 !important; /* green color */
-        font-weight: 700 !important; /* bold */
+        color: #00A651 !important;
+        font-weight: 700 !important;
         text-decoration: none !important;
         margin-left: 10px;
     }
-
     .header__top__right__auth a:hover {
-        color: #007A3D !important; /* darker green on hover */
+        color: #007A3D !important;
         text-decoration: underline !important;
     }
+    .header__top__right__auth { float: right; }
 
-    /* Align auth links to the right */
-    .header__top__right__auth {
-        float: right;
+    /* 🔥 Product Card Upgrade */
+    .featured__item {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        border-radius: 10px;
+        overflow: hidden;
+        background: #fff;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        transition: all 0.3s ease-in-out;
     }
+
+    /* Elevation on hover */
+    .featured__item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+    }
+
+    /* Image */
+    .featured__item__pic {
+        height: 200px !important;
+        background-size: cover !important;
+        background-position: center !important;
+        border-radius: 8px;
+        transition: all 0.3s ease-in-out;
+    }
+
+    /* Slight zoom on hover */
+    .featured__item:hover .featured__item__pic {
+        transform: scale(1.05);
+    }
+
+    /* Product text */
+    .featured__item__text {
+        padding: 12px;
+        text-align: center;
+    }
+
+    /* Add to Cart button inside card */
+    .btn-cart {
+        background: #00A651;
+        border: none;
+        padding: 7px 15px;
+        color: white;
+        font-size: 14px;
+        border-radius: 6px;
+        margin-top: 10px;
+        transition: 0.3s;
+        width: 100%;
+    }
+    .btn-cart:hover {
+        background: #007A3D;
+    }
+
+    /* Quick View button */
+    .btn-view {
+        background: #005BBB;
+        border: none;
+        margin-top: 7px;
+        padding: 7px 15px;
+        color: white;
+        font-size: 14px;
+        border-radius: 6px;
+        width: 100%;
+    }
+    .btn-view:hover {
+        background: #004C94;
+    }
+
+    /* MOBILE: 2 columns */
+    @media (max-width: 768px) {
+        .row > div.col-sm-6 {
+            width: 50% !important;
+            padding-left: 6px !important;
+            padding-right: 6px !important;
+            margin-bottom: 15px !important;
+        }
+        .featured__item__pic {
+            height: 170px !important;
+        }
+    }
+
+    /* TABLET: 3 columns */
+    @media (min-width: 769px) and (max-width: 991px) {
+        .row > div.col-md-4 {
+            width: 33.33% !important;
+            padding-left: 10px !important;
+            padding-right: 10px !important;
+        }
+    }
+
 </style>
 {% endblock %}
 
 {% block content %}
+
 <div class="container my-5">
     <h2 class="section-title mb-4 text-center">Featured Products</h2>
 
     <div class="row">
         {% for product in featured_products %}
-        <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+        <div class="col-lg-3 col-md-4 col-sm-6 mb-3">
             <div class="featured__item">
+
                 <div class="featured__item__pic set-bg"
-                     data-setbg="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no-image.png' %}{% endif %}">
-                    <ul class="featured__item__pic__hover">
-                        <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                    </ul>
+                    loading="lazy"
+                    data-setbg="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no-image.png' %}{% endif %}">
                 </div>
-                <div class="featured__item__text text-center">
-                    <h6><a href="#">{{ product.name }}</a></h6>
+
+                <div class="featured__item__text">
+                    <h6>{{ product.name }}</h6>
                     <h5>UGX {{ product.price|intcomma }}</h5>
+
+                    <button class="btn-cart">Add to Cart</button>
+                    <button class="btn-view" onclick="openQuickView('{{ product.name }}', '{{ product.price|intcomma }}', '{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no-image.png' %}{% endif %}')">Quick View</button>
                 </div>
+
             </div>
         </div>
-        {% empty %}
-        <p class="text-center">No products available.</p>
         {% endfor %}
     </div>
 </div>
@@ -58,31 +149,64 @@
 
     <div class="row">
         {% for product in products %}
-        <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+        <div class="col-lg-3 col-md-4 col-sm-6 mb-3">
             <div class="featured__item">
+
                 <div class="featured__item__pic set-bg"
-                     data-setbg="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no-image.png' %}{% endif %}">
-                    <ul class="featured__item__pic__hover">
-                        <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                    </ul>
+                    loading="lazy"
+                    data-setbg="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no-image.png' %}{% endif %}">
                 </div>
-                <div class="featured__item__text text-center">
-                    <h6><a href="#">{{ product.name }}</a></h6>
+
+                <div class="featured__item__text">
+                    <h6>{{ product.name }}</h6>
                     <h5>UGX {{ product.price|intcomma }}</h5>
+
+                    <button class="btn-cart">Add to Cart</button>
+                    <button class="btn-view" onclick="openQuickView('{{ product.name }}', '{{ product.price|intcomma }}', '{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no-image.png' %}{% endif %}')">Quick View</button>
                 </div>
+
             </div>
         </div>
-        {% empty %}
-        <p class="text-center">No products available.</p>
         {% endfor %}
     </div>
 </div>
 
+<!-- 🔥 Quick View Modal -->
+<div id="quickViewModal" style="
+    position: fixed; 
+    top:0; left:0; 
+    width:100%; height:100%;
+    background: rgba(0,0,0,0.6); 
+    display:none; 
+    justify-content:center; 
+    align-items:center;
+    z-index:10000;
+">
+    <div style="background:#fff; padding:20px; border-radius:10px; width:90%; max-width:400px; text-align:center;">
+        <img id="qvImage" src="" style="width:100%; border-radius:10px;">
+        <h3 id="qvName" class="mt-3"></h3>
+        <h4 id="qvPrice" style="color:#00A651;"></h4>
+        <button onclick="closeQuickView()" style="margin-top:10px; background:#333; color:white; padding:8px 18px; border:none; border-radius:8px;">Close</button>
+    </div>
+</div>
+
 <script>
-    // 🔄 Automatically set background images
+    // Set background images
     $('.set-bg').each(function () {
         var bg = $(this).data('setbg');
         $(this).css('background-image', 'url(' + bg + ')');
     });
+
+    // Quick View
+    function openQuickView(name, price, image) {
+        document.getElementById("qvName").innerText = name;
+        document.getElementById("qvPrice").innerText = "UGX " + price;
+        document.getElementById("qvImage").src = image;
+        document.getElementById("quickViewModal").style.display = "flex";
+    }
+    function closeQuickView() {
+        document.getElementById("quickViewModal").style.display = "none";
+    }
 </script>
+
 {% endblock %}
