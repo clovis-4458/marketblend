@@ -65,10 +65,18 @@
         .card p.text-danger { font-size: 14px; font-weight: bold; }
 
         /* ================= RESPONSIVE ================= */
+        @media (max-width: 992px) {
+            .header__top { display: block !important; padding: 10px 0; }
+            .header__top ul { flex-direction: column; gap: 5px; margin-bottom: 0; }
+            .header__top__right__auth { justify-content: flex-start; margin-top: 5px; }
+        }
         @media (max-width: 576px) {
             .card-title { font-size: 14px; }
             .card p.text-danger { font-size: 13px; }
             .card .btn { font-size: 12px; padding: 4px 8px; }
+            .header__logo img { width: 90px !important; } /* smaller logo on mobile */
+            .humberger__menu__wrapper ul li { margin-bottom: 8px; } /* gap between menu items */
+            .humberger__menu__wrapper ul li.separator { border-top: 1px solid #00A651; margin: 8px 0; }
         }
     </style>
 </head>
@@ -80,7 +88,7 @@
 <div class="humberger__menu__wrapper">
     <div class="humberger__menu__logo">
         <a href="{% url 'home' %}">
-            <img src="{% static 'img/marketblendlogo.png' %}" alt="Market Blend" style="width:120px;">
+            <img src="{% static 'img/marketblendlogo.png' %}" alt="Market Blend">
         </a>
     </div>
 
@@ -91,17 +99,24 @@
             <li><a href="{% url 'cart:view_cart' %}">Cart</a></li>
             <li><a href="{% url 'blog:list' %}">Blog</a></li>
             <li><a href="{% url 'contact' %}">Contact</a></li>
+            
+            <li class="separator"></li> <!-- separator for contact -->
+            <li><strong>Contact:</strong></li>
+            <li><i class="fa fa-envelope"></i> marketblend@gmail.com</li>
+            <li><i class="fa fa-phone"></i> +256 755 450 568</li>
+
+            <li class="separator"></li> <!-- separator for auth -->
+            {% if user.is_authenticated %}
+                <li><i class="fa fa-user-circle"></i> {{ user.username }}</li>
+                <li><a href="{% url 'accounts:logout' %}">Logout</a></li>
+            {% else %}
+                <li><a href="{% url 'accounts:register' %}">Register</a></li>
+                <li><a href="{% url 'accounts:index' %}">Login</a></li>
+            {% endif %}
         </ul>
     </nav>
 
     <div id="mobile-menu-wrap"></div>
-
-    <div class="humberger__menu__contact">
-        <ul>
-            <li><i class="fa fa-envelope"></i> marketblend@gmail.com</li>
-            <li><i class="fa fa-phone"></i> +256 755 450 568</li>
-        </ul>
-    </div>
 </div>
 
 <!-- ===================== HEADER ===================== -->
@@ -153,7 +168,7 @@
             <div class="col-lg-2">
                 <div class="header__logo">
                     <a href="{% url 'home' %}">
-                        <img src="{% static 'img/marketblendlogo.png' %}" alt="Market Blend" style="width:120px;">
+                        <img src="{% static 'img/marketblendlogo.png' %}" alt="Market Blend">
                     </a>
                 </div>
             </div>
@@ -225,56 +240,6 @@
         {% endfor %}
     {% endif %}
 </div>
-
-<section class="my-4">
-    <div class="container">
-        <div class="row">
-
-            <!-- ================= FEATURED PRODUCTS ================= -->
-            <div class="col-lg-8">
-                <div class="row">
-                    {% for product in featured_products %}
-                    <div class="col-6 col-sm-4 col-md-6 mb-3">
-                        <div class="card shadow-sm text-center p-2" style="min-height:280px;">
-                            <img src="{{ product.image.url }}" class="card-img-top" style="height:150px; object-fit:contain;" alt="{{ product.name }}">
-                            <div class="card-body p-2">
-                                <h5 class="card-title">{{ product.name|truncatechars:40 }}</h5>
-                                <p class="text-danger fw-bold mb-2">UGX {{ product.price|intcomma }}.00</p>
-                                <div class="d-flex justify-content-center gap-1 flex-wrap">
-                                    <a href="{% url 'shop_details' product.id %}" class="btn btn-outline-primary btn-sm">Details</a>
-                                    <form action="{% url 'cart:add_to_cart' product.id %}" method="POST">
-                                        {% csrf_token %}
-                                        <button type="submit" class="btn btn-success btn-sm">Add to Cart</button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    {% endfor %}
-                </div>
-            </div>
-
-            <!-- ================= HERO SLIDER ================= -->
-            <div class="col-lg-4">
-                <div class="hero-slider">
-                    <div class="owl-carousel owl-theme">
-                        {% for product in featured_products %}
-                        <div class="item">
-                            <img src="{{ product.image.url }}" alt="{{ product.name }}">
-                            <div class="slider-text">
-                                <h4>{{ product.name }}</h4>
-                                <p>UGX {{ product.price|intcomma }}</p>
-                                <a href="{% url 'shop_details' product.id %}" class="btn btn-success btn-sm">Shop Now</a>
-                            </div>
-                        </div>
-                        {% endfor %}
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-</section>
 
 {% block content %}{% endblock %}
 </main>
