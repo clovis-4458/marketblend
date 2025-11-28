@@ -72,39 +72,13 @@
     font-size: 24px;
 }
 
-/* ------------------------------ */
-/* RESPONSIVE — 2 columns on phone */
-/* ------------------------------ */
+/* Responsive adjustments */
 @media (max-width: 576px) {
-    .col-6 { flex: 0 0 50%; max-width: 50%; }  /* << CHANGED FROM 33% to 50% */
+    .col-6 { flex: 0 0 33.3333%; max-width: 33.3333%; } /* 3 columns on mobile */
     .product-img { height: 120px; }
     .product-name { font-size: 14px; min-height: 38px; }
     .product-price { font-size: 14px; }
     .btn { font-size: 13px; padding: 5px 8px; }
-}
-
-/* ------------------------------------------------------------ */
-/* FIXED: Reduce empty space between image and Add to Cart      */
-/* ------------------------------------------------------------ */
-.product-name {
-    margin-top: 4px !important;
-    min-height: 28px !important;
-}
-
-.product-img {
-    height: 130px !important;
-}
-
-.product-card {
-    padding: 10px !important;
-}
-
-.items-left {
-    margin-top: -5px !important;
-}
-
-.btn {
-    margin-top: 4px !important;
 }
 </style>
 {% endblock %}
