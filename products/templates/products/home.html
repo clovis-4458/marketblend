@@ -72,13 +72,33 @@
     font-size: 24px;
 }
 
-/* Responsive adjustments */
+/* Existing responsive adjustments */
 @media (max-width: 576px) {
-    .col-6 { flex: 0 0 33.3333%; max-width: 33.3333%; } /* 3 columns on mobile */
+    .col-6 { flex: 0 0 33.3333%; max-width: 33.3333%; } /* You had 3 columns */
     .product-img { height: 120px; }
     .product-name { font-size: 14px; min-height: 38px; }
     .product-price { font-size: 14px; }
     .btn { font-size: 13px; padding: 5px 8px; }
+}
+
+/* ---------------------------------------------
+   🔥 NEW: FORCE 2-COLUMN PRODUCT GRID ON MOBILE
+   (Jiji-style, exactly what you asked for)
+--------------------------------------------- */
+@media (max-width: 576px) {
+    .col-6,
+    .product-item,
+    .product-card-wrapper,
+    .product-container {
+        flex: 0 0 50% !important;
+        max-width: 50% !important;
+        padding: 5px !important;
+    }
+
+    .card,
+    .product-card {
+        margin-bottom: 8px !important;
+    }
 }
 </style>
 {% endblock %}
