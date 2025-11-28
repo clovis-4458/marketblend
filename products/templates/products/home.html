@@ -128,30 +128,38 @@
         padding: 3px 6px;
     }
 
-    /* ------------------- MOBILE HEADER ------------------- */
-    .header__logo img {
-        max-height: 35px; /* shrink logo */
-    }
-
-    .header__search {
-        flex: 1;
-        margin-left: 10px;
-    }
-
-    .header__top,
-    .header__search-container {
+    /* ------------------- MOBILE HEADER: LOGO + SEARCH ------------------- */
+    .header__top {
         display: flex;
         align-items: center;
+        justify-content: space-between;
+    }
+
+    .header__logo img {
+        max-height: 35px; /* smaller logo */
+        width: auto;
+    }
+
+    .header__search-container {
+        flex: 1;
+        margin-left: 10px;
     }
 
     .header__search input[type="text"] {
         height: 35px;
         font-size: 13px;
+        padding: 0 8px;
     }
 
     .header__search button {
         height: 35px;
-        padding: 0 10px;
+        padding: 0 8px;
+    }
+
+    /* Ensure logo + search stay in one row */
+    .header__top .header__logo,
+    .header__top .header__search-container {
+        flex-shrink: 0;
     }
 }
 </style>
