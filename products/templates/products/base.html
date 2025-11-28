@@ -33,16 +33,20 @@
         .header__cart ul li a,
         .navbar a,
         .nav-item a { color: #00A651 !important; text-decoration: none !important; }
+
         .header__menu ul li a:hover,
         .header__menu__dropdown li a:hover,
         .header__top__right a:hover,
         .header__top__right__social a i:hover,
         .header__cart ul li a:hover,
         .navbar a:hover { color: #007A3D !important; text-decoration: underline !important; }
+
         .header__menu ul li.active > a { color: #00994D !important; text-decoration: underline !important; }
+
         .navbar-brand, .logo { color: #00A651 !important; font-weight: 900 !important; }
         .header__top__right__auth a { color: #00A651 !important; margin-left: 10px; font-weight: bold !important; }
         .header__top__right__auth a:hover { color: #007A3D !important; }
+
         .search-bar .form-control, .search-bar .form-select, .search-bar .btn { height: 50px; font-size: 14px; }
         .search-bar .form-control { border-radius: 30px 0 0 30px; border: 1px solid #00A651; }
         .search-bar .form-select { border-top: 1px solid #00A651; border-bottom: 1px solid #00A651; border-left: 0; border-right: 0; border-radius: 0; }
@@ -64,20 +68,12 @@
         .card-title { font-size: 16px; font-weight: 600; }
         .card p.text-danger { font-size: 14px; font-weight: bold; }
 
-        /* ================= RESPONSIVE ================= */
-        @media (max-width: 992px) {
-            .header__top { display: block !important; padding: 10px 0; }
-            .header__top ul { flex-direction: column; gap: 5px; margin-bottom: 0; }
-            .header__top__right__auth { justify-content: flex-start; margin-top: 5px; }
-        }
+        /* 2 columns on mobile like Jiji */
         @media (max-width: 576px) {
-            .card-title { font-size: 14px; }
-            .card p.text-danger { font-size: 13px; }
-            .card .btn { font-size: 12px; padding: 4px 8px; }
-            .header__logo img { width: 90px !important; } /* smaller logo on mobile */
-            .humberger__menu__wrapper ul li { margin-bottom: 8px; } /* gap between menu items */
-            .humberger__menu__wrapper ul li.separator { border-top: 1px solid #00A651; margin: 8px 0; }
+            .col-6 { padding: 5px; }
+            .card { margin-bottom: 10px; }
         }
+
     </style>
 </head>
 
@@ -100,12 +96,12 @@
             <li><a href="{% url 'blog:list' %}">Blog</a></li>
             <li><a href="{% url 'contact' %}">Contact</a></li>
 
-            <li class="separator"></li> <!-- separator for contact -->
+            <li class="separator"></li>
             <li><strong>Contact:</strong></li>
             <li><i class="fa fa-envelope"></i> marketblend@gmail.com</li>
             <li><i class="fa fa-phone"></i> +256 755 450 568</li>
 
-            <li class="separator"></li> <!-- separator for auth -->
+            <li class="separator"></li>
             {% if user.is_authenticated %}
                 <li><i class="fa fa-user-circle"></i> {{ user.username }}</li>
                 <li><a href="{% url 'accounts:logout' %}">Logout</a></li>
@@ -261,7 +257,9 @@
     </div>
 </section>
 
-{% block content %}{% endblock %}
+{% block content %}
+{% endblock %}
+
 </main>
 
 <!-- ===================== FOOTER ===================== -->
